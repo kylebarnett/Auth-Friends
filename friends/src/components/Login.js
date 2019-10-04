@@ -14,8 +14,8 @@ class Login extends React.Component {
   }
   handleChange = e => {
     this.setState({
-      ...this.state.credentials,
       credentials: {
+        ...this.state.credentials,
         [e.target.name]: e.target.value
       }
     })
@@ -26,8 +26,9 @@ class Login extends React.Component {
     axiosWithAuth()
       .post('/login', this.state.credentials)
       .then(res => {
+        console.log(res)
         localStorage.setItem('token', res.data.payload);
-        this.props.history.push('/protected');
+        this.props.history.push('/friends');
       })
       .catch(err => console.log(err));
     this.setState({
