@@ -36,16 +36,28 @@ class FriendsList extends Component {
       })
       .catch(err => console.log(err))
   }
+
+  deleteFriend = id => {
+    axiosWithAuth()
+      .delete(`/friends/${id}`, id)
+      .then(res => {
+        console.log(id)
+        this.setState({
+          friends: res.data
+        })
+      })
+  }
   render() {
     return (
       <div>
         {this.state.loaded ?
           (
-            this.state.friends.map((friend, i) => (
-              <div key={friend.id}>
+            this.state.friends.map((friend, index) => (
+              <div key={index}>
                 <p>Name: {friend.name}</p>
                 <p>Age: {friend.age}</p>
                 <p>Email: {friend.email}</p>
+                <button onClick={() => this.deleteFriend(index)}>Delete Me</button>
               </div>
             ))
           )
